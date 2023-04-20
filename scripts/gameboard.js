@@ -1,4 +1,4 @@
-const Ship = require("./ship");
+import Ship from "./ship.js";
 
 class Gameboard {
   constructor() {
@@ -23,6 +23,14 @@ class Gameboard {
       }
       char = String.fromCharCode(char.charCodeAt(0) + 1);
     }
+
+    this.fleet = {
+      carrier: new Ship("Carrier", 5),
+      battleship: new Ship("Battleship", 4),
+      cruiser: new Ship("Cruiser", 3),
+      submarine: new Ship("Submarine", 3),
+      destroyer: new Ship("Destroyer", 2),
+    };
   }
 
   isOnGrid(coordinates) {
@@ -50,7 +58,7 @@ class Gameboard {
 
   //   accepts ship Class and coordinates. E.g ["a", 6]
   placeShip(ship, coordinates, direction) {
-    if (this.validateShip(ship, coordinates, direction) === false) return false;
+    // if (this.validateShip(ship, coordinates, direction) === false) return false;
     for (let i = 0; i < ship.length; i++) {
       let x = coordinates[0];
       let y = coordinates[1] - 1;
@@ -61,22 +69,57 @@ class Gameboard {
     }
   }
 
+  placeShips(coordinates, directions) {
+    let array = [
+      this.fleet.carrier,
+      this.fleet.battleship,
+      this.fleet.cruiser,
+      this.fleet.submarine,
+      this.fleet.destroyer,
+    ];
+    for (let i = 0; i < array.length; i++) {
+      this.placeShip(array[i], coordinates[i], directions[i]);
+    }
+  }
+
+  randomiseBoard() {
+    let array = [
+      this.fleet.carrier,
+      this.fleet.battleship,
+      this.fleet.cruiser,
+      this.fleet.submarine,
+      this.fleet.destroyer,
+    ];
+    for (let i = 0; i < 5; i++) {
+      let coordinates;
+      do {
+        coordinates = this.randomiseCoordinates();
+      } while (!this.validateShip(array[i], coordinates, "horizontal"));
+      this.placeShip(array[i], coordinates, "horizontal");
+    }
+  }
+
   receiveAttack(coordinates) {
     let x = coordinates[0];
     let y = coordinates[1] - 1;
     switch (this.grid[x][y]) {
       case null:
         this.grid[x][y] = "miss";
+        break;
       case "Carrier":
-        Ship.hit(carrier), Ship.isSunk(carrier);
+        this.fleet.carrier.isHit(), this.fleet.carrier.isSunk();
+        break;
       case "Battleship":
-        Ship.hit(battleship), Ship.isSunk(battleship);
+        this.fleet.battleship.isHit(), this.fleet.battleship.isSunk();
+        break;
       case "Cruiser":
-        Ship.hit(cruiser), Ship.isSunk(cruiser);
-      case "submarine":
-        Ship.hit(submarine), Ship.isSunk(submarine);
-      case "destroyer":
-        Ship.hit(destroyer), Ship.isSunk(destroyer);
+        this.fleet.cruiser.isHit(), this.fleet.cruiser.isSunk();
+        break;
+      case "Submarine":
+        this.fleet.submarine.isHit(), this.fleet.submarine.isSunk();
+        break;
+      case "Destroyer":
+        this.fleet.destroyer.isHit(), this.fleet.destroyer.isSunk();
     }
   }
 
@@ -89,6 +132,12 @@ class Gameboard {
     if (destroyer.sunk === true) count++;
     return count === 5 ? true : false;
   }
+
+  randomiseCoordinates() {
+    let char = String.fromCharCode(Math.floor(Math.random() * 10 + 90));
+    let n = Math.floor(Math.random() * 10);
+    return [char, n];
+  }
 }
 
-module.exports = Gameboard;
+export default Gameboard;

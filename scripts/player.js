@@ -1,23 +1,35 @@
+import Gameboard from "./gameboard.js";
 class Player {
   constructor(name, turn) {
     this.name = name;
     this.turn = turn;
+    this.board = new Gameboard();
   }
   attackEnemy(coordinates, opponent) {
-    let x = coordinates[0];
-    let y = coordinates[1] - 1;
-    opponent.receiveAttack([x, y]);
+    opponent.receiveAttack(coordinates);
+  }
+
+  changeTurn() {
+    this.turn ? (this.turn = false) : (this.turn = true);
+  }
+
+  hasLost(dom) {
+    let boolean = true;
+    for (let i = 0; i < 5; i++) {
+      if (!Object.keys(this.board.fleet)[i].sunk) return false;
+    }
+    return dom;
   }
 }
 
 class Computer extends Player {
-  constructor(name, turn) {
-    super(name, turn);
+  constructor(...args) {
+    super(...args);
 
     this.availableCoordinates = [];
     let char = "a";
     for (let i = 0; i < 10; i++) {
-      for (let j = 1; j < 10; j++) {
+      for (let j = 1; j <= 10; j++) {
         this.availableCoordinates.push([char, j]);
       }
       char = String.fromCharCode(char.charCodeAt(0) + 1);
@@ -32,4 +44,4 @@ class Computer extends Player {
   }
 }
 
-module.exports = { Player, Computer };
+export { Player, Computer };

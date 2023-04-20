@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   shape-rendering="geometricPrecision"
+   text-rendering="geometricPrecision"
+   image-rendering="optimizeQuality"
+   fill-rule="evenodd"
+   clip-rule="evenodd"
+   viewBox="0 0 1023.9947 366.54"
+   version="1.1"
+   id="svg864"
+   sodipodi:docname="warship-icon.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   width="1023.9947"
+   height="366.54001"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs868" />
+  <sodipodi:namedview
+     id="namedview866"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.65551758"
+     inkscape:cx="394.34488"
+     inkscape:cy="151.78845"
+     inkscape:window-width="3380"
+     inkscape:window-height="1414"
+     inkscape:window-x="60"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg864"
+     units="mm"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <path
+     d="M 7.8749765,199.16 C 131.41498,212.34 217.45498,221.7 331.77498,228.46 l 29.78,-139.06 c 11.02,0 22.2,-0.08 33.5,-0.18 V 0 h 36.42 v 88.76 l 25.24,-0.38 V 37.42 h 36.42 v 50.5 c 40.64,-0.4 81.04,-0.32 119.14,1.52 23.86,1.98 44.62,9.74 61.28,25.14 16.3,15.08 28.14,37.18 34.42,67.96 l 0.22,1.1 0.04,1.18 1.22,58.38 c 44.04,1.02 59.26,1.9 105.24,2.68 l 201.42002,3.48 c 4.08,0.06 9.5,3.98 7.42,7.42 l -62.02002,102.34 c -2.06,3.4 -3.42,7.42 -7.42,7.42 h -853.98 C 95.474976,366.54 10.194976,223.38 0.45497646,206.6 -1.1650235,203.82 1.5949765,198.5 7.8749765,199.16 Z M 220.57498,112.66 h -20.42 l -2.76,-24.18 c -0.26,-2.1 -1.78,-3.84 -3.86,-3.84 h -49.4 c -2.08,0 -3.6,1.74 -3.84,3.84 l -2.78,24.18 h -18.46 c -2.92,0 -4.6,2.56 -5.38,5.36 l -1.72,6.22 -89.440004,-14.74 -3.06,15.32 85.940004,23.24 -13.320004,48.7 c 53.900004,5.14 106.500004,9.56 158.420004,13.4 l -24.56,-92.14 c -0.74,-2.84 -2.5,-5.36 -5.36,-5.36 z m 587.44,55.22 h 20.4 l 2.78,-24.18 c 0.24,-2.1 1.74,-3.84 3.84,-3.84 h 49.4 c 2.12,0 3.62,1.74 3.86,3.84 l 2.78,24.18 h 18.46 c 2.96,0 4.6,2.56 5.36,5.36 l 1.72,6.22 75.3,-10.92 3.06,15.32 -71.8,19.42 9.24,33.7 -117.72,-2.02 -28.36,-0.5 16.3,-61.22 c 0.76,-2.84 2.42,-5.36 5.38,-5.36 z m -251.14,-32.26 h 108.44 c 9.74,14.68 16.68,29.68 18.76,45.06 h -127.2 z m -73.84,-0.02 h 46.66 v 46.16 h -46.66 z"
+     id="path862"
+     style="fill:#00ff00;stroke-width:2" />
+</svg>
