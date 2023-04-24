@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Battleship icon</title>
+    <title>Battleship</title>
     <link rel="icon" href="assets/warship-icon.svg" type="image/x-icon" />
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,7 +13,41 @@
   </head>
   <body>
     <div class="headerbar">
+      <img
+        src="./assets/warship-icon.svg"
+        alt="warhship"
+        class="battleship-icon"
+      />
       <h1>Battleship</h1>
+      <img
+        src="./assets/warship-icon.svg"
+        alt="warhship"
+        class="battleship-icon two"
+      />
+    </div>
+    <div class="name-prompt-container">
+      <form action="javascript:void(0)">
+        <label for="name">What is your name admiral?</label>
+        <div>
+          <input type="text" name="name" id="inputName" placeholder="Ackbar" />
+          <button type="button">Begin</button>
+        </div>
+      </form>
+    </div>
+    <div id="board-container"></div>
+    <div id="placement-container">
+      <div class="instructions-placement">
+        <h2>Place your ships Admiral</h2>
+        <p>Press [R] to rotate axis before placing</p>
+      </div>
+
+      <div class="fleet-selection">
+        <div class="drag" id="carrier" draggable="true">CV</div>
+        <div class="drag" id="battleship" draggable="true">BB</div>
+        <div class="drag" id="cruiser" draggable="true">CA</div>
+        <div class="drag" id="submarine" draggable="true">SS</div>
+        <div class="drag" id="destroyer" draggable="true">DD</div>
+      </div>
     </div>
     <script type="module" src="./scripts/game.js" async defer></script>
   </body>

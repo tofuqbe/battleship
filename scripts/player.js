@@ -5,6 +5,10 @@ class Player {
     this.turn = turn;
     this.board = new Gameboard();
   }
+
+  setName(name) {
+    this.name = name;
+  }
   attackEnemy(coordinates, opponent) {
     opponent.receiveAttack(coordinates);
   }

@@ -1,23 +1,337 @@
 :root {
-  --fs-xl: 3.5rem;
-  --fs-600: 2rem;
-  --fs-500: 1.5rem;
-  --fs-400: 1rem;
+  --fs-xl: 3rem;
+  --fs-600: 1.6rem;
+  --fs-500: 1.2rem;
+  --fs-400: 0.8rem;
+  --green: rgb(43, 216, 86);
+}
+
+@font-face {
+  font-family: "Aldrich-Regular";
+  src: url("../assets/Aldrich/Aldrich-Regular.ttf");
+}
+
+/* animations */
+
+.fade {
+  opacity: 0;
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
+}
+
+body {
+  background-color: #17191a;
 }
 
 .headerbar {
   width: 100%;
-  background-color: #c9c6c8;
-  padding: 16px 0px;
+  height: 60px;
+  background-color: #020001;
+  padding: 16px 0px 16px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .headerbar h1 {
-  display: flex;
-  justify-content: center;
+  width: fit-content;
   font-size: var(--fs-xl);
+  color: aliceblue;
+  font-family: "Aldrich-Regular";
+}
+
+.battleship-icon {
+  position: absolute;
+  height: var(--fs-xl);
+  transform: translateX(-160%);
+}
+
+.battleship-icon.two {
+  transform: translateX(160%) scaleX(-1);
 }
 
 .max-width {
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.name-prompt-container {
+  position: absolute;
+  height: calc(100vh - 92px);
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  background-color: #17191a;
+  /* transition: 0.5s all ease-in; */
+}
+
+.name-prompt-container form {
+  display: flex;
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+}
+form {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+form label {
+  font-size: var(--fs-500);
+  color: #f7ffff;
+  transform: skew(-5deg);
+  font-family: "Aldrich-Regular";
+  /* overflow: hidden; 
+  border-right: 0.15em solid var(--green); 
+  white-space: nowrap;
+  margin: 0 auto; 
+  letter-spacing: 0.15em;
+  animation: typing 2.5s steps(28, end), blink-caret 1.5s step-end infinite; */
+}
+
+/* @keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--green);
+  }
+} */
+
+form div {
+  position: absolute;
+  transform: translateY(calc(100% + 16px));
+}
+
+form input {
+  border: 2px solid rgb(104, 102, 102);
+  padding: 6px;
+  background-color: #17191a;
+  caret-color: rgb(255, 255, 255);
+  color: white;
+  font-family: "Aldrich-Regular";
+}
+
+form input:focus {
+  outline: unset;
+  border: 2px solid rgb(177, 175, 175);
+}
+
+form button {
+  font-size: var(--fs-400);
+  font-weight: 700;
+  padding: 6px;
+  background-color: #17191a;
+  color: #ffffff;
+  border: none;
+
+  font-family: "Aldrich-Regular";
+}
+
+form button:hover {
+  background-color: var(--green);
+  transition: 300ms ease-in-out all;
+  cursor: pointer;
+}
+
+#placement-container {
+  width: calc(100vw - 64px);
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 10vh 32px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  row-gap: 16px;
+}
+
+.instructions-placement {
+  margin: 0 auto;
+  width: fit-content;
+  z-index: 1;
+}
+
+h2 {
+  font-family: "Aldrich-Regular";
+  font-size: var(--fs-600);
+  padding: 8px 0px;
+  color: rgb(255, 255, 255);
+}
+
+.instructions-placement p {
+  text-align: center;
+  padding: 8px 0px;
+  color: rgb(255, 255, 255);
+  font-size: var(--fs-400);
+  font-family: "Aldrich-Regular";
+}
+
+#placement-container .board {
+  grid-column: 1;
+  grid-row: 2;
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  border: 3px dashed rgb(115, 114, 117);
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  position: relative;
+}
+
+.fleet-selection {
+  margin: 0px auto;
+  margin-top: 100px;
+  position: relative;
+  height: 50px;
+  width: fit-content;
+  display: flex;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.fleet-selection :nth-child(n) {
+  justify-items: center;
+  align-items: center;
+  height: 50px;
+  background-color: rgb(102, 122, 175);
+  margin: 6px;
+  border: 1px solid black;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-500);
+  font-family: "Aldrich-Regular";
+  color: white;
+  z-index: 2;
+}
+
+.fleet-selection :nth-child(n):hover {
+  cursor: pointer;
+  background-color: rgb(47, 86, 194);
+  transition: transform 200ms linear;
+}
+
+#carrier {
+  width: 250px;
+}
+
+#battleship {
+  width: 200px;
+}
+
+#cruiser {
+  width: 150px;
+}
+
+#submarine {
+  width: 150px;
+}
+
+#destroyer {
+  width: 100px;
+}
+
+#carrier.rotate {
+  width: 50px !important;
+  height: 250px !important;
+}
+
+#battleship.rotate {
+  width: 50px !important;
+  height: 200px !important;
+}
+
+#cruiser.rotate,
+#submarine.rotate {
+  width: 50px !important;
+  height: 150px !important;
+}
+
+#destroyer.rotate {
+  width: 50px !important;
+  height: 100px !important;
+}
+
+.overlay {
+  position: absolute;
+  height: 50px;
+  background-color: rgb(47, 86, 194);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 50%;
+  grid-template-columns: 50px 1fr;
+  font-size: var(--fs-500);
+  font-family: "Aldrich-Regular";
+  color: white;
+  border: 1px solid rgba(236, 226, 226, 0.438);
+  border-radius: 6px;
+}
+
+#board-container {
+  height: calc(80vh - 92px);
+  width: calc(100vw - 64px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10vh 32px;
+  column-gap: 32px;
+  border-radius: 6px;
+  display: none;
+  visibility: hidden;
+}
+
+#board-container .player {
+  grid-column: 1;
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  border: 3px solid rgb(27, 22, 22);
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+#board-container .computer {
+  grid-column: 2;
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  border: 3px solid rgb(27, 22, 22);
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.zone {
+  width: 100%;
+  height: 100%;
+  background-color: #50575a;
+  border: 2px dashed hsla(0, 6%, 13%, 0.16);
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 100%;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0%;
+    visibility: hidden;
+  }
 }
