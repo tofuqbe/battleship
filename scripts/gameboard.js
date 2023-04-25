@@ -40,7 +40,9 @@ class Gameboard {
   }
 
   isEmpty(coordinates) {
-    return this.grid[coordinates[0]][coordinates[1]] === null ? true : false;
+    return this.grid[coordinates[0]][coordinates[1] - 1] === null
+      ? true
+      : false;
   }
 
   validateShip(ship, coordinates, rotated) {
@@ -51,7 +53,7 @@ class Gameboard {
         ? (x = String.fromCharCode(coordinates[0].charCodeAt(0) + i))
         : (y += i);
 
-      // if (!this.isOnGrid([x, y])) return false;
+      if (!this.isOnGrid([x, y])) return false;
       if (!this.isEmpty([x, y])) return false;
     }
     return true;
@@ -68,8 +70,6 @@ class Gameboard {
         : (y += i);
       this.grid[x][y] = this.fleet[ship].name;
     }
-
-    console.log(this.grid);
   }
 
   placeShips(coordinates, rotations) {

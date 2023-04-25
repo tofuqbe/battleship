@@ -10,21 +10,25 @@ class Gameloop {
 let gameloop = new Gameloop();
 const display = new Display();
 
-// Start screen, get player name.
+Display.generateGrid(
+  document.querySelector("#placement-container"),
+  "board",
+  "My Fleet"
+);
+
+const placementBoard = document.querySelector("#placement-container .board");
+const placementContainer = document.querySelector("#placement-container");
+const fleetSelection = document.querySelector("#fleet-selection");
+const boardContainer = document.querySelector("#board-container");
 
 Display.getPlayerName(
   document.querySelector("form"),
   document.querySelector("#inputName"),
-  gameloop.player
+  gameloop.player,
+  placementContainer
 );
 
 // Placement Phase Drag and rotate ships to place them on board.
-
-Display.generateGrid(document.querySelector("#placement-container"), "board");
-
-const placementBoard = document.querySelector("#placement-container .board");
-
-const fleetSelection = document.querySelector("#fleet-selection");
 
 fleetSelection.addEventListener("mouseover", (e) => {
   display.hover_handler(e);
@@ -42,29 +46,13 @@ placementBoard.childNodes.forEach((zone) => {
   zone.addEventListener("dragover", Display.dragend_handler);
   zone.removeEventListener;
   zone.addEventListener("drop", (e) => {
-    display.dragdrop_handler(e, gameloop.player.board);
+    display.dragdrop_handler(
+      e,
+      gameloop.player.board,
+      placementContainer,
+      boardContainer
+    );
   });
 });
 
-// Display.rotate(document.querySelector(".fleet-selection"));
-
 // Combat Phase. Generates two grids and begins taking turns until all ships on one side are sunk.
-
-Display.generateGrid(
-  document.querySelector("#board-container"),
-  gameloop.player.name
-);
-
-Display.generateGrid(
-  document.querySelector("#board-container"),
-  gameloop.computer.name
-);
-
-// Selector Cache
-const playerBoard = document.querySelector("#board-container .player");
-
-// placementBoard.addEventListener("click", (e) => {
-//   if (e.target.classList.contains("zone")) {
-//     let coordinate = Display.getCoordFromBoard(e);
-//   }
-// });

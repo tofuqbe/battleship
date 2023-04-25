@@ -25,28 +25,32 @@
         class="battleship-icon two"
       />
     </div>
-    <div class="name-prompt-container">
-      <form action="javascript:void(0)">
-        <label for="name">What is your name admiral?</label>
-        <div>
-          <input type="text" name="name" id="inputName" placeholder="Ackbar" />
-          <button type="button">Begin</button>
-        </div>
-      </form>
-    </div>
-    <div id="board-container"></div>
-    <div id="placement-container">
-      <div class="instructions-placement">
-        <h2>Place your ships Admiral</h2>
-        <p>Press [R] to rotate axis before placing</p>
+    <div class="max-width">
+      <div class="name-prompt-container">
+        <form action="javascript:void(0)">
+          <label for="name">What is your name admiral?</label>
+          <div>
+            <input
+              type="text"
+              name="name"
+              id="inputName"
+              placeholder="Ackbar"
+            />
+            <button type="button">Begin</button>
+          </div>
+        </form>
       </div>
+      <div id="board-container" class="fade hide absolute"></div>
+      <div id="placement-container" class="fade hide absolute">
+        <div id="fleet-selection">
+          <p>Press [R] to rotate axis before placing</p>
 
-      <div id="fleet-selection">
-        <div class="drag" id="carrier" draggable="true">CV</div>
-        <div class="drag" id="battleship" draggable="true">BB</div>
-        <div class="drag" id="cruiser" draggable="true">CA</div>
-        <div class="drag" id="submarine" draggable="true">SS</div>
-        <div class="drag" id="destroyer" draggable="true">DD</div>
+          <div class="drag" id="carrier" draggable="true">CV</div>
+          <div class="drag" id="battleship" draggable="true">BB</div>
+          <div class="drag" id="cruiser" draggable="true">CA</div>
+          <div class="drag" id="submarine" draggable="true">SS</div>
+          <div class="drag" id="destroyer" draggable="true">DD</div>
+        </div>
       </div>
     </div>
     <script type="module" src="./scripts/game.js" async defer></script>

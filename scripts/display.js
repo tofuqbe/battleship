@@ -8,27 +8,30 @@ class Display {
       submarine: false,
       destroyer: false,
     };
-    this.hover = null;
+    this.hover = "fleet-selection";
     this.offset = {
       x: null,
       y: null,
     };
+    this.shipsToPlace = 5;
   }
 
-  static getPlayerName(form, inputId, player) {
+  static getPlayerName(form, inputId, player, fadeIn) {
     form.addEventListener("click", function eventHandler(e) {
       if (e.target.type === "button") {
         player.name = inputId.value;
-        console.log(player);
         form.removeEventListener("click", eventHandler);
-        form.parentElement.classList.add("fade");
-        form.addEventListener("transitionend", function remove() {
-          form.classList.add("hide");
-          form.removeEventListener("transitionend", remove);
-          Display.removeForm(form);
-        });
+        form.parentElement.classList.add("hide");
+        Display.fadeIn(fadeIn);
+        form.parentElement.remove();
       }
     });
+  }
+
+  static fadeIn(target) {
+    target.classList.remove("hide");
+    target.classList.remove("fade");
+    target.classList.remove("absolute");
   }
 
   // Drag and drop API usage below
@@ -46,7 +49,7 @@ class Display {
 
   // sets the variable data with element from datatransfer object.
 
-  dragdrop_handler(e, board) {
+  dragdrop_handler(e, board, target, copyLocation) {
     const data = e.dataTransfer.getData("text");
     // Gets index of target from dataset.
     let zoneNumber = e.target.dataset.num - 1;
@@ -81,14 +84,37 @@ class Display {
       e.target.parentElement.children[zoneNumber].appendChild(
         document.getElementById(data)
       );
-      e.target.parentElement.children[zoneNumber].children[0].classList.add(
-        "overlay"
-      );
-      e.target.parentElement.children[zoneNumber].children[0].draggable = false;
-      e.target.parentElement.children[zoneNumber].children[0].style.userSelect =
-        "none";
-      this.setHover(null);
+      this.postPlacementTweaks(e, zoneNumber);
+      this.shipsToPlace -= 1;
+      if (this.shipsToPlace === 0) {
+        this.hidePlacementBoard(target);
+        Display.copyGrid(copyLocation, target.children[1]);
+        Display.generateGrid(
+          document.querySelector("#board-container"),
+          "computer",
+          "Enemy Fleet"
+        );
+        Display.fadeIn(copyLocation);
+      }
     }
+  }
+
+  hidePlacementBoard(target) {
+    target.classList.add("fade");
+    target.addEventListener("transitionend", function hide() {
+      target.classList.add("hide");
+      target.removeEventListener("transitionend", hide);
+    });
+  }
+
+  postPlacementTweaks(e, zoneNumber) {
+    e.target.parentElement.children[zoneNumber].children[0].classList.add(
+      "overlay"
+    );
+    e.target.parentElement.children[zoneNumber].children[0].draggable = false;
+    e.target.parentElement.children[zoneNumber].children[0].style.userSelect =
+      "none";
+    this.setHover(null);
   }
 
   setHover(value) {
@@ -108,10 +134,6 @@ class Display {
     }
   }
 
-  static paintShip(coordinate) {
-    coordinate.classList.add("ship");
-  }
-
   static getCoordFromBoard(e) {
     let char = "a";
     let n = e + 1;
@@ -119,23 +141,30 @@ class Display {
       n -= 10;
       char = String.fromCharCode(char.charCodeAt(0) + 1);
     }
-    console.log[(char, n)];
     return [char, n];
   }
 
-  static removeForm(form) {
-    form.parentElement.remove();
+  static copyGrid(target, copy) {
+    let grid = copy;
+    console.log(grid);
+    grid.classList.remove("board");
+    grid.classList.add("player");
+    target.appendChild(grid);
   }
 
-  static generateGrid(element, owner) {
+  static generateGrid(target, owner, header) {
     let boardWrapper = document.createElement("div");
     boardWrapper.classList.add(owner);
     boardWrapper.classList.add("boardWrapper");
+
     let board = document.createElement("div");
     board.classList.add("board");
     board.classList.add(owner);
     let axisX = document.createElement("div");
     let axisY = document.createElement("div");
+
+    let h2 = document.createElement("h2");
+    h2.innerText = header;
 
     // axis labels
     for (let i = 1; i <= 10; i++) {
@@ -148,7 +177,7 @@ class Display {
     }
     axisX.classList.add("axisX");
     axisY.classList.add("axisY");
-
+    boardWrapper.append(h2);
     boardWrapper.append(axisX);
     boardWrapper.append(axisY);
 
@@ -163,7 +192,7 @@ class Display {
       board.append(zone);
     }
     boardWrapper.append(board);
-    element.append(boardWrapper);
+    target.append(boardWrapper);
   }
 }
 
