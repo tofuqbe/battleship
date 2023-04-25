@@ -12,13 +12,7 @@ let tempCoordinates = [
   ["d", 4],
   ["e", 5],
 ];
-let directions = [
-  "horizontal",
-  "horizontal",
-  "horizontal",
-  "horizontal",
-  "horizontal",
-];
+let directions = [false, false, false, false, false];
 
 const gameloop = require("../game").gameloop;
 
@@ -105,7 +99,7 @@ describe("attacks are successfuly registered", () => {
 //     gameloop.computer.board.placeShip(
 //       gameloop.computer.board.fleet.destroyer,
 //       ["g", 7],
-//       "vertical"
+//       true
 //     );
 
 //     gameloop.player.attackEnemy(["g", 7], gameloop.computer.board);

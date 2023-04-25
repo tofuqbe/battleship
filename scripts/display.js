@@ -31,6 +31,10 @@ class Display {
     });
   }
 
+  // Drag and drop API usage below
+
+  // stores offsets and sets element in the datatransfer object.
+
   dragstart_handler(e) {
     e.dataTransfer.setData("text", e.target.id);
     this.offset = { x: e.offsetX, y: e.offsetY };
@@ -40,12 +44,16 @@ class Display {
     e.preventDefault();
   }
 
-  dragdrop_handler(e, fleet) {
+  // sets the variable data with element from datatransfer object.
+
+  dragdrop_handler(e, board) {
     const data = e.dataTransfer.getData("text");
+    // Gets index of target from dataset.
     let zoneNumber = e.target.dataset.num - 1;
-    let length = fleet[data].length - 1;
+    let length = board.fleet[data].length;
     let rotated = this.rotated[data];
 
+    // offsets index to the left or topmost square of a ship's length, reguardless of the cursor location when it is dragged.
     while (this.offset.x > 50) {
       zoneNumber -= 1;
       this.offset.x -= 50;
@@ -55,23 +63,32 @@ class Display {
       this.offset.y -= 50;
     }
 
+    // prevents drop by disreguarding inputs that leave a square of the ship outside of the grid.
+
     if (
-      (rotated === false && (zoneNumber % 10) + length > 9) ||
-      (rotated && zoneNumber + 10 * length > 99)
+      (!rotated && (zoneNumber % 10) + length - 1 > 9) ||
+      (rotated && zoneNumber + 10 * (length - 1) > 99)
     ) {
       return 0;
     }
 
-    e.target.parentElement.children[zoneNumber].appendChild(
-      document.getElementById(data)
-    );
-    e.target.parentElement.children[zoneNumber].children[0].classList.add(
-      "overlay"
-    );
-    e.target.parentElement.children[zoneNumber].children[0].draggable = false;
-    e.target.parentElement.children[zoneNumber].children[0].style.userSelect =
-      "none";
-    this.setHover(null);
+    let coordinates = Display.getCoordFromBoard(zoneNumber);
+    // let boundValidate = validateShip.bind(board);
+    // let boundPlace = placeShip.bind(board);
+
+    if (board.validateShip(data, coordinates, rotated)) {
+      board.placeShip(data, coordinates, rotated);
+      e.target.parentElement.children[zoneNumber].appendChild(
+        document.getElementById(data)
+      );
+      e.target.parentElement.children[zoneNumber].children[0].classList.add(
+        "overlay"
+      );
+      e.target.parentElement.children[zoneNumber].children[0].draggable = false;
+      e.target.parentElement.children[zoneNumber].children[0].style.userSelect =
+        "none";
+      this.setHover(null);
+    }
   }
 
   setHover(value) {
@@ -83,7 +100,7 @@ class Display {
   }
 
   rotate(key, hover) {
-    if (key.code === "KeyR" && hover !== "") {
+    if (key.code === "KeyR" && hover !== "fleet-selection") {
       this.rotated[hover]
         ? (this.rotated[hover] = false)
         : (this.rotated[hover] = true);
@@ -97,12 +114,12 @@ class Display {
 
   static getCoordFromBoard(e) {
     let char = "a";
-    let n = e.target.dataset.num;
+    let n = e + 1;
     while (n > 10) {
       n -= 10;
       char = String.fromCharCode(char.charCodeAt(0) + 1);
     }
-    console.log([char, n]);
+    console.log[(char, n)];
     return [char, n];
   }
 
@@ -111,16 +128,42 @@ class Display {
   }
 
   static generateGrid(element, owner) {
+    let boardWrapper = document.createElement("div");
+    boardWrapper.classList.add(owner);
+    boardWrapper.classList.add("boardWrapper");
     let board = document.createElement("div");
+    board.classList.add("board");
     board.classList.add(owner);
+    let axisX = document.createElement("div");
+    let axisY = document.createElement("div");
+
+    // axis labels
+    for (let i = 1; i <= 10; i++) {
+      let axisNumber = document.createElement("p");
+      axisNumber.innerText = i;
+      axisX.append(axisNumber);
+      let axisLetter = document.createElement("p");
+      axisLetter.innerText = String.fromCharCode(64 + i);
+      axisY.append(axisLetter);
+    }
+    axisX.classList.add("axisX");
+    axisY.classList.add("axisY");
+
+    boardWrapper.append(axisX);
+    boardWrapper.append(axisY);
+
+    // zones
+
     for (let i = 0; i < 100; i++) {
       let zone = document.createElement("div");
       zone.classList.add("zone");
       let n = i;
+      // linearly assigns a number to dataset.
       zone.dataset.num = i + 1;
       board.append(zone);
     }
-    element.append(board);
+    boardWrapper.append(board);
+    element.append(boardWrapper);
   }
 }
 

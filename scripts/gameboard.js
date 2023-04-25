@@ -43,33 +43,36 @@ class Gameboard {
     return this.grid[coordinates[0]][coordinates[1]] === null ? true : false;
   }
 
-  validateShip(ship, coordinates, direction) {
-    for (let i = 0; i < ship.length; i++) {
+  validateShip(ship, coordinates, rotated) {
+    for (let i = 0; i < this.fleet[ship].length; i++) {
       let x = coordinates[0];
-      let y = coordinates[1] - 1;
-      direction.toLowerCase() === "horizontal"
+      let y = coordinates[1];
+      rotated
         ? (x = String.fromCharCode(coordinates[0].charCodeAt(0) + i))
         : (y += i);
-      if (!this.isOnGrid([x, y])) return false;
+
+      // if (!this.isOnGrid([x, y])) return false;
       if (!this.isEmpty([x, y])) return false;
     }
     return true;
   }
 
   //   accepts ship Class and coordinates. E.g ["a", 6]
-  placeShip(ship, coordinates, direction) {
-    // if (this.validateShip(ship, coordinates, direction) === false) return false;
-    for (let i = 0; i < ship.length; i++) {
+  placeShip(ship, coordinates, rotated) {
+    // if (this.validateShip(ship, coordinates, rotated) === false) return false;
+    for (let i = 0; i < this.fleet[ship].length; i++) {
       let x = coordinates[0];
       let y = coordinates[1] - 1;
-      direction.toLowerCase() === "horizontal"
+      rotated
         ? (x = String.fromCharCode(coordinates[0].charCodeAt(0) + i))
         : (y += i);
-      this.grid[x][y] = ship.name;
+      this.grid[x][y] = this.fleet[ship].name;
     }
+
+    console.log(this.grid);
   }
 
-  placeShips(coordinates, directions) {
+  placeShips(coordinates, rotations) {
     let array = [
       this.fleet.carrier,
       this.fleet.battleship,
@@ -78,7 +81,7 @@ class Gameboard {
       this.fleet.destroyer,
     ];
     for (let i = 0; i < array.length; i++) {
-      this.placeShip(array[i], coordinates[i], directions[i]);
+      this.placeShip(array[i], coordinates[i], rotations[i]);
     }
   }
 
@@ -94,8 +97,8 @@ class Gameboard {
       let coordinates;
       do {
         coordinates = this.randomiseCoordinates();
-      } while (!this.validateShip(array[i], coordinates, "horizontal"));
-      this.placeShip(array[i], coordinates, "horizontal");
+      } while (!this.validateShip(array[i], coordinates, true));
+      this.placeShip(array[i], coordinates, true);
     }
   }
 

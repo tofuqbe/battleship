@@ -29,7 +29,7 @@ body {
 .headerbar {
   width: 100%;
   height: 60px;
-  background-color: #020001;
+  background-color: rgb(14 31 44);
   padding: 16px 0px 16px 0px;
   display: flex;
   justify-content: center;
@@ -64,6 +64,9 @@ body {
   width: 100%;
   background-color: rgb(255, 255, 255);
   background-color: #17191a;
+  display: none;
+  visibility: hidden;
+  opacity: 0;
   /* transition: 0.5s all ease-in; */
 }
 
@@ -147,20 +150,22 @@ form button:hover {
 }
 
 #placement-container {
-  width: calc(100vw - 64px);
+  width: 100%;
+  margin-top: 5vh;
   display: grid;
   grid-template-columns: 1fr;
-  padding: 10vh 32px;
-  justify-content: center;
-  align-items: center;
+  grid-template-rows: auto;
   border-radius: 6px;
   row-gap: 16px;
+  justify-items: center;
+  align-items: center;
 }
 
 .instructions-placement {
   margin: 0 auto;
   width: fit-content;
   z-index: 1;
+  grid-row: 1;
 }
 
 h2 {
@@ -178,8 +183,47 @@ h2 {
   font-family: "Aldrich-Regular";
 }
 
-#placement-container .board {
+.boardWrapper {
+  width: 550px;
+  height: 550px;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-rows: 50px 1fr;
+  position: relative;
+}
+
+.axisX,
+.axisY {
+  display: grid;
+  font-family: "Aldrich-Regulars";
+  font-size: var(--fs-500);
+  color: white;
+  justify-items: center;
+  align-items: center;
+}
+
+.axisX {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.axisY {
+  grid-row: 2;
   grid-column: 1;
+}
+
+.axisX :nth-child(n + 1) {
+  grid-row: 1;
+  grid-column: auto;
+}
+
+.axisY :nth-child(n) {
+  grid-row: auto;
+  grid-column: 1;
+}
+
+.boardWrapper .board {
+  grid-column: 2;
   grid-row: 2;
   height: 500px;
   width: 500px;
@@ -189,25 +233,26 @@ h2 {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
   position: relative;
+  grid-column: 2;
+  grid-row: 2;
 }
 
-.fleet-selection {
+#fleet-selection {
+  grid-row: 3;
   margin: 0px auto;
   margin-top: 100px;
   position: relative;
-  height: 50px;
-  width: fit-content;
+  height: 260px;
+  width: 100%;
   display: flex;
-
-  justify-items: center;
-  align-items: center;
+  justify-content: center;
 }
 
-.fleet-selection :nth-child(n) {
+#fleet-selection :nth-child(n) {
   justify-items: center;
   align-items: center;
   height: 50px;
-  background-color: rgb(102, 122, 175);
+  background-color: rgba(15, 92, 165, 0.4);
   margin: 6px;
   border: 1px solid black;
   border-radius: 6px;
@@ -218,11 +263,12 @@ h2 {
   font-family: "Aldrich-Regular";
   color: white;
   z-index: 2;
+  padding: 0px;
 }
 
-.fleet-selection :nth-child(n):hover {
+#fleet-selection :nth-child(n):hover {
   cursor: pointer;
-  background-color: rgb(47, 86, 194);
+  background-color: rgba(15, 92, 165, 0.7);
   transition: transform 200ms linear;
 }
 
@@ -270,11 +316,10 @@ h2 {
 .overlay {
   position: absolute;
   height: 50px;
-  background-color: rgb(47, 86, 194);
+  background-color: rgba(15, 92, 165, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 50%;
   grid-template-columns: 50px 1fr;
   font-size: var(--fs-500);
   font-family: "Aldrich-Regular";

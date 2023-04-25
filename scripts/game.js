@@ -24,7 +24,7 @@ Display.generateGrid(document.querySelector("#placement-container"), "board");
 
 const placementBoard = document.querySelector("#placement-container .board");
 
-const fleetSelection = document.querySelector(".fleet-selection");
+const fleetSelection = document.querySelector("#fleet-selection");
 
 fleetSelection.addEventListener("mouseover", (e) => {
   display.hover_handler(e);
@@ -42,7 +42,7 @@ placementBoard.childNodes.forEach((zone) => {
   zone.addEventListener("dragover", Display.dragend_handler);
   zone.removeEventListener;
   zone.addEventListener("drop", (e) => {
-    display.dragdrop_handler(e, gameloop.player.board.fleet);
+    display.dragdrop_handler(e, gameloop.player.board);
   });
 });
 
