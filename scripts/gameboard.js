@@ -52,7 +52,6 @@ class Gameboard {
       rotated
         ? (x = String.fromCharCode(coordinates[0].charCodeAt(0) + i))
         : (y += i);
-
       if (!this.isOnGrid([x, y])) return false;
       if (!this.isEmpty([x, y])) return false;
     }
@@ -87,57 +86,61 @@ class Gameboard {
 
   randomiseBoard() {
     let array = [
-      this.fleet.carrier,
-      this.fleet.battleship,
-      this.fleet.cruiser,
-      this.fleet.submarine,
-      this.fleet.destroyer,
+      this.fleet.carrier.name.toLowerCase(),
+      this.fleet.battleship.name.toLowerCase(),
+      this.fleet.cruiser.name.toLowerCase(),
+      this.fleet.submarine.name.toLowerCase(),
+      this.fleet.destroyer.name.toLowerCase(),
     ];
     for (let i = 0; i < 5; i++) {
       let coordinates;
+      let randomBoolean;
       do {
         coordinates = this.randomiseCoordinates();
-      } while (!this.validateShip(array[i], coordinates, true));
-      this.placeShip(array[i], coordinates, true);
+        randomBoolean = Math.floor(Math.random() * 2);
+      } while (!this.validateShip(array[i], coordinates, randomBoolean));
+      this.placeShip(array[i], coordinates, randomBoolean);
     }
   }
 
   receiveAttack(coordinates) {
     let x = coordinates[0];
-    let y = coordinates[1] - 1;
+    let y = coordinates[1];
+
     switch (this.grid[x][y]) {
       case null:
         this.grid[x][y] = "miss";
-        break;
+        return false;
       case "Carrier":
         this.fleet.carrier.isHit(), this.fleet.carrier.isSunk();
-        break;
+        return true;
       case "Battleship":
         this.fleet.battleship.isHit(), this.fleet.battleship.isSunk();
-        break;
+        return true;
       case "Cruiser":
         this.fleet.cruiser.isHit(), this.fleet.cruiser.isSunk();
-        break;
+        return true;
       case "Submarine":
         this.fleet.submarine.isHit(), this.fleet.submarine.isSunk();
-        break;
+        return true;
       case "Destroyer":
         this.fleet.destroyer.isHit(), this.fleet.destroyer.isSunk();
+        return true;
     }
   }
 
   allSunk() {
-    let count = 0;
-    if (carrier.sunk === true) count++;
-    if (battleship.sunk === true) count++;
-    if (cruiser.sunk === true) count++;
-    if (submarine.sunk === true) count++;
-    if (destroyer.sunk === true) count++;
-    return count === 5 ? true : false;
+    let array = Object.keys(this.fleet);
+
+    let shipsSunk = 0;
+    for (let i = 0; i < 5; i++) {
+      if (this.fleet[array[i]].sunk) shipsSunk++;
+    }
+    return shipsSunk === 5 ? true : false;
   }
 
   randomiseCoordinates() {
-    let char = String.fromCharCode(Math.floor(Math.random() * 10 + 90));
+    let char = String.fromCharCode(Math.floor(Math.random() * 10 + 97));
     let n = Math.floor(Math.random() * 10);
     return [char, n];
   }

@@ -1,3 +1,4 @@
+import Game_Controller from "./gamecontroller.js";
 class Display {
   constructor() {
     this.dragged = null;
@@ -8,6 +9,13 @@ class Display {
       submarine: false,
       destroyer: false,
     };
+    this.shipNames = [
+      "carrier",
+      "battleship",
+      "cruiser",
+      "submarine",
+      "destroyer",
+    ];
     this.hover = "fleet-selection";
     this.offset = {
       x: null,
@@ -17,14 +25,34 @@ class Display {
   }
 
   static getPlayerName(form, inputId, player, fadeIn) {
-    form.addEventListener("click", function eventHandler(e) {
-      if (e.target.type === "button") {
+    function enter(key) {
+      if (key.code === "Enter" && inputId.value !== "") {
         player.name = inputId.value;
-        form.removeEventListener("click", eventHandler);
+        inputId.removeEventListener("keypress", enter);
+        form.removeEventListener("click", click);
         form.parentElement.classList.add("hide");
         Display.fadeIn(fadeIn);
-        form.parentElement.remove();
+        // form.parentElement.remove();
       }
+    }
+
+    function click(e) {
+      if (e.target.type === "button" && inputId.value !== "") {
+        player.name = inputId.value;
+        form.removeEventListener("click", click);
+        inputId.removeEventListener("keypress", enter);
+        form.parentElement.classList.add("hide");
+        Display.fadeIn(fadeIn);
+        // form.parentElement.remove();
+      }
+    }
+
+    inputId.addEventListener("keypress", (key) => {
+      enter(key);
+    });
+
+    form.addEventListener("click", (e) => {
+      click(e);
     });
   }
 
@@ -49,11 +77,11 @@ class Display {
 
   // sets the variable data with element from datatransfer object.
 
-  dragdrop_handler(e, board, target, copyLocation) {
+  dragdrop_handler(e, gameloop, target, copyLocation) {
     const data = e.dataTransfer.getData("text");
     // Gets index of target from dataset.
     let zoneNumber = e.target.dataset.num - 1;
-    let length = board.fleet[data].length;
+    let length = gameloop.player.board.fleet[data].length;
     let rotated = this.rotated[data];
 
     // offsets index to the left or topmost square of a ship's length, reguardless of the cursor location when it is dragged.
@@ -79,8 +107,8 @@ class Display {
     // let boundValidate = validateShip.bind(board);
     // let boundPlace = placeShip.bind(board);
 
-    if (board.validateShip(data, coordinates, rotated)) {
-      board.placeShip(data, coordinates, rotated);
+    if (gameloop.player.board.validateShip(data, coordinates, rotated)) {
+      gameloop.player.board.placeShip(data, coordinates, rotated);
       e.target.parentElement.children[zoneNumber].appendChild(
         document.getElementById(data)
       );
@@ -95,6 +123,13 @@ class Display {
           "Enemy Fleet"
         );
         Display.fadeIn(copyLocation);
+        copyLocation.children[1].addEventListener("click", (e) => {
+          Game_Controller.turnHandler(
+            e,
+            gameloop,
+            copyLocation.children[0].children[3]
+          );
+        });
       }
     }
   }
@@ -126,11 +161,11 @@ class Display {
   }
 
   rotate(key, hover) {
-    if (key.code === "KeyR" && hover !== "fleet-selection") {
+    if (key.code === "KeyR" && this.shipNames.includes(hover)) {
       this.rotated[hover]
         ? (this.rotated[hover] = false)
         : (this.rotated[hover] = true);
-      document.querySelector(`#${hover}`).classList.toggle("rotate");
+      document.getElementById(`${hover}`).classList.toggle("rotate");
     }
   }
 
@@ -146,7 +181,6 @@ class Display {
 
   static copyGrid(target, copy) {
     let grid = copy;
-    console.log(grid);
     grid.classList.remove("board");
     grid.classList.add("player");
     target.appendChild(grid);

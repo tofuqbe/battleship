@@ -10,7 +10,7 @@ class Player {
     this.name = name;
   }
   attackEnemy(coordinates, opponent) {
-    opponent.receiveAttack(coordinates);
+    return opponent.receiveAttack(coordinates);
   }
 
   changeTurn() {
@@ -33,7 +33,7 @@ class Computer extends Player {
     this.availableCoordinates = [];
     let char = "a";
     for (let i = 0; i < 10; i++) {
-      for (let j = 1; j <= 10; j++) {
+      for (let j = 0; j < 10; j++) {
         this.availableCoordinates.push([char, j]);
       }
       char = String.fromCharCode(char.charCodeAt(0) + 1);
@@ -44,7 +44,7 @@ class Computer extends Player {
     let randomNumber = Math.floor(
       Math.random() * (this.availableCoordinates.length - 1)
     );
-    return this.availableCoordinates.splice(randomNumber, 1);
+    return this.availableCoordinates.splice(randomNumber, 1)[0];
   }
 }
 

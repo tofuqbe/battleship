@@ -60,10 +60,13 @@ body {
 .max-width {
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 }
 
 .name-prompt-container {
-  height: calc(100vh - 92px);
+  margin-top: 100px;
+  height: 650px;
+
   width: 100%;
   background-color: rgb(255, 255, 255);
   background-color: #17191a;
@@ -233,6 +236,7 @@ form button:hover {
 }
 
 #fleet-selection p {
+  user-select: none;
   padding: 8px 0px;
   color: rgb(255, 255, 255);
   font-size: var(--fs-400);
@@ -347,6 +351,28 @@ form button:hover {
   height: 100%;
   background-color: #50575a;
   border: 2px dashed hsla(0, 6%, 13%, 0.16);
+  display: flex;
+}
+
+.hit {
+  background-color: red;
+  height: 10px;
+  width: 10px;
+  border-radius: 200px;
+  border: 1px solid red;
+  flex-direction: column;
+  margin: 0 auto;
+  align-self: center;
+}
+
+.miss {
+  background-color: white;
+  height: 10px;
+  width: 10px;
+  border: 1px solid white;
+  border-radius: 200px;
+  margin: 0 auto;
+  align-self: center;
 }
 
 @keyframes disappear {

@@ -8,6 +8,7 @@ class Gameloop {
 }
 
 let gameloop = new Gameloop();
+gameloop.computer.board.randomiseBoard();
 const display = new Display();
 
 Display.generateGrid(
@@ -46,12 +47,7 @@ placementBoard.childNodes.forEach((zone) => {
   zone.addEventListener("dragover", Display.dragend_handler);
   zone.removeEventListener;
   zone.addEventListener("drop", (e) => {
-    display.dragdrop_handler(
-      e,
-      gameloop.player.board,
-      placementContainer,
-      boardContainer
-    );
+    display.dragdrop_handler(e, gameloop, placementContainer, boardContainer);
   });
 });
 
