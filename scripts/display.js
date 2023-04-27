@@ -22,6 +22,7 @@ class Display {
       y: null,
     };
     this.shipsToPlace = 5;
+    this.gameController = new Game_Controller();
   }
 
   static getPlayerName(form, inputId, player, fadeIn) {
@@ -60,6 +61,14 @@ class Display {
     target.classList.remove("hide");
     target.classList.remove("fade");
     target.classList.remove("absolute");
+  }
+
+  static fadeOut(target) {
+    target.classList.add("fade");
+    target.addEventListener("transitionend", function hide() {
+      target.classList.add("hide");
+      target.removeEventListener("transitionend", hide);
+    });
   }
 
   // Drag and drop API usage below
@@ -115,7 +124,7 @@ class Display {
       this.postPlacementTweaks(e, zoneNumber);
       this.shipsToPlace -= 1;
       if (this.shipsToPlace === 0) {
-        this.hidePlacementBoard(target);
+        Display.fadeOut(target);
         Display.copyGrid(copyLocation, target.children[1]);
         Display.generateGrid(
           document.querySelector("#board-container"),
@@ -124,7 +133,7 @@ class Display {
         );
         Display.fadeIn(copyLocation);
         copyLocation.children[1].addEventListener("click", (e) => {
-          Game_Controller.turnHandler(
+          this.gameController.turnHandler(
             e,
             gameloop,
             copyLocation.children[0].children[3]
@@ -134,17 +143,9 @@ class Display {
     }
   }
 
-  hidePlacementBoard(target) {
-    target.classList.add("fade");
-    target.addEventListener("transitionend", function hide() {
-      target.classList.add("hide");
-      target.removeEventListener("transitionend", hide);
-    });
-  }
-
   postPlacementTweaks(e, zoneNumber) {
     e.target.parentElement.children[zoneNumber].children[0].classList.add(
-      "overlay"
+      "placedShip"
     );
     e.target.parentElement.children[zoneNumber].children[0].draggable = false;
     e.target.parentElement.children[zoneNumber].children[0].style.userSelect =
