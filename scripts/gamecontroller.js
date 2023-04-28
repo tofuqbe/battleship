@@ -1,5 +1,5 @@
 const audioController = document.querySelector("#audio-controller");
-
+const result = document.querySelector("#result");
 class Game_Controller {
   constructor() {
     this.audio = document.querySelectorAll(".audio");
@@ -107,12 +107,11 @@ class Game_Controller {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.enemyTurn(gameloop, playerBoard));
-      }, 1200);
+      }, 1000);
     });
   }
 
-  turnHandler(e, gameloop, playerBoard) {
-    let state = this.state;
+  turnHandler(e, gameloop, playerBoard, fadeIn) {
     let cannon = this.cannons;
     let splash = this.splash;
     let explosion = this.explosion;
@@ -129,14 +128,17 @@ class Game_Controller {
     }
     function playerWin(gameloop) {
       if (gameloop.computer.board.allSunk()) {
-        return console.log("Player wins!");
+        result.children[0].children[0].innerText = "Victory!";
+        result.children[0].children[1].innerText = "Restart?";
+        return fadeIn(result);
       }
     }
 
     function computerWin(gameloop) {
       if (gameloop.player.board.allSunk()) {
-        console.log("Computer wins!");
-        return true;
+        result.children[0].children[0].innerText = "Defeat...";
+        result.children[0].children[1].innerText = "Try Again?";
+        return fadeIn(result);
       }
       return false;
     }
@@ -157,7 +159,7 @@ class Game_Controller {
           return new Promise((resolve) => {
             setTimeout(() => {
               resolve(fireCannon(cannon));
-            }, 1200);
+            }, 1000);
           });
         })
         .then(() => {
@@ -171,30 +173,7 @@ class Game_Controller {
               }
             });
         });
-
-      // .then(() => {
-      //   return new Promise((resolve) => {
-      //     setTimeout(() => {
-      //       resolve(gameloop.player.changeTurn());
-      //     });
-      //   });
-      // });
     }
-
-    // })
-    // .then(() => {
-    //   const enemyPromise = new Promise((resolve) => {
-    //     window.setTimeout(() => {
-    //       resolve(this.enemyTurn(gameloop, playerBoard));
-    //     }, 2000);
-    //   });
-    //   enemyPromise.then(() => {
-    //     if (gameloop.player.board.allSunk()) {
-    //       return console.log("Computer Wins!");
-    //     }
-    //     gameloop.player.changeTurn();
-    //   });
-    // });
   }
 }
 

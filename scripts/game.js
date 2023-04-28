@@ -1,5 +1,10 @@
 import { Player, Computer } from "./player.js";
 import Display from "./display.js";
+const replay = document.querySelector("#result").children[0].children[1];
+
+replay.addEventListener("click", (e) => {
+  window.location.reload();
+});
 
 class Gameloop {
   constructor() {
@@ -10,7 +15,7 @@ class Gameloop {
 
 let gameloop = new Gameloop();
 gameloop.computer.board.randomiseBoard();
-const display = new Display();
+let display = new Display();
 
 Display.generateGrid(
   document.querySelector("#placement-container"),
@@ -22,7 +27,6 @@ const placementBoard = document.querySelector("#placement-container .board");
 const placementContainer = document.querySelector("#placement-container");
 const fleetSelection = document.querySelector("#fleet-selection");
 const boardContainer = document.querySelector("#board-container");
-
 Display.getPlayerName(
   document.querySelector("form"),
   document.querySelector("#inputName"),

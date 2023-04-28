@@ -76,6 +76,7 @@ class Display {
     target.classList.add("fade");
     target.addEventListener("transitionend", function hide() {
       target.classList.add("hide");
+
       target.removeEventListener("transitionend", hide);
     });
   }
@@ -145,7 +146,8 @@ class Display {
           this.gameController.turnHandler(
             e,
             gameloop,
-            copyLocation.children[0].children[3]
+            copyLocation.children[0].children[3],
+            Display.fadeIn
           );
         });
       }
