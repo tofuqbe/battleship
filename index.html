@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
+    <audio id="cannon" controls class="audio">
+      <source src="./assets/cannonShot.mp3" type="audio/mp3" id="cannon" />
+    </audio>
+    <audio id="cannon2" controls class="audio">
+      <source src="./assets/cannonShot2.mp3" type="audio/mp3" />
+    </audio>
+    <audio id="splash" controls class="audio">
+      <source src="./assets/splash.mp3" type="audio/mp3" />
+    </audio>
+    <audio id="explosion" controls class="audio">
+      <source src="./assets/explosion.mp3" type="audio/mp3" />
+    </audio>
     <div class="headerbar">
       <img
         src="./assets/warship-icon.svg"
@@ -25,6 +37,12 @@
         class="battleship-icon two"
       />
     </div>
+    <div class="underheader">
+      <img src="" alt="" />
+    </div>
+
+    <div id="audio-controller"></div>
+
     <div class="max-width">
       <div class="name-prompt-container">
         <form action="javascript:void(0)">
@@ -52,6 +70,10 @@
         </div>
       </div>
     </div>
+    <script
+      type="text/javascript"
+      src="./scripts/bodymovin-library.js"
+    ></script>
     <script type="module" src="./scripts/game.js" async defer></script>
   </body>
 </html>

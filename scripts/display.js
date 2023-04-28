@@ -1,4 +1,5 @@
 import Game_Controller from "./gamecontroller.js";
+
 class Display {
   constructor() {
     this.dragged = null;
@@ -33,7 +34,11 @@ class Display {
         form.removeEventListener("click", click);
         form.parentElement.classList.add("hide");
         Display.fadeIn(fadeIn);
-        // form.parentElement.remove();
+        // Yes this is so bad.
+        player.name.charAt(player.name.length - 1) === "s"
+          ? (fadeIn.children[1].firstChild.innerText = player.name + "' Fleet")
+          : (fadeIn.children[1].firstChild.innerText =
+              player.name + "'s Fleet");
       }
     }
 
@@ -44,7 +49,11 @@ class Display {
         inputId.removeEventListener("keypress", enter);
         form.parentElement.classList.add("hide");
         Display.fadeIn(fadeIn);
-        // form.parentElement.remove();
+        // Yes this is so bad.
+        player.name.charAt(player.name.length - 1) === "s"
+          ? (fadeIn.children[1].firstChild.innerText = player.name + "' Fleet")
+          : (fadeIn.children[1].firstChild.innerText =
+              player.name + "'s Fleet");
       }
     }
 

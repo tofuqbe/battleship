@@ -1,5 +1,6 @@
 import { Player, Computer } from "./player.js";
 import Display from "./display.js";
+
 class Gameloop {
   constructor() {
     this.computer = new Computer("computer", false);

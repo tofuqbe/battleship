@@ -1,11 +1,45 @@
+const audioController = document.querySelector("#audio-controller");
+
 class Game_Controller {
   constructor() {
-    this.cannon = new Audio("assets/cannonShot.mp3");
-    this.cannon2 = new Audio("assets/cannonShot2.mp3");
-    this.splash = new Audio("assets/splash.mp3");
-    this.explosion = new Audio("assets/explosion.mp3");
+    this.audio = document.querySelectorAll(".audio");
+    this.cannons = [this.audio[0], this.audio[1]];
+    this.splash = this.audio[2];
+    this.explosion = this.audio[3];
     this.playerShot = false;
     this.computerShot = false;
+    this.state = "open";
+    (() => {
+      const animation = bodymovin.loadAnimation({
+        // animationData: { /* ... */ },
+        container: document.querySelector("#audio-controller"), // required
+        path: ".//assets/volume.json", // required
+        renderer: "svg", // required
+        loop: false, // optional
+        autoplay: false, // optional
+        name: "audio-animation", // optional
+      });
+      animation.goToAndStop(0, true);
+      animation.setSpeed(1.2);
+
+      const animateMenu = () => {
+        if (this.state === "open") {
+          animation.playSegments([10, 30], true);
+          this.state = "closed";
+          this.soundControl();
+        } else {
+          animation.playSegments([42, 60], true);
+          this.state = "open";
+          this.soundControl();
+        }
+      };
+      audioController.addEventListener("click", animateMenu);
+    })();
+  }
+  soundControl() {
+    this.audio.forEach((sound) => {
+      sound.muted ? (sound.muted = false) : (sound.muted = true);
+    });
   }
   static getCoordFromBoard(e) {
     let char = "a";
@@ -65,7 +99,7 @@ class Game_Controller {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.playerTurn(e, gameloop));
-      }, 2000);
+      }, 1200);
     });
   }
 
@@ -73,39 +107,77 @@ class Game_Controller {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.enemyTurn(gameloop, playerBoard));
-      }, 2000);
+      }, 1200);
     });
   }
 
   turnHandler(e, gameloop, playerBoard) {
-    let cannon = this.cannon;
-    let cannon2 = this.cannon2;
+    let state = this.state;
+    let cannon = this.cannons;
     let splash = this.splash;
     let explosion = this.explosion;
     function fireCannon(type) {
-      type.play();
+      let randomNumber = Math.floor(Math.random() * 2);
+      type[randomNumber].play();
     }
     function fireFeedback(hit) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve(hit ? explosion.play() : splash.play());
-        }, 2000);
+        }, 100);
       });
     }
     function playerWin(gameloop) {
       if (gameloop.computer.board.allSunk()) {
-        return console.log("Player Wins!");
+        return console.log("Player wins!");
       }
     }
 
-    if (gameloop.player.turn && !e.target.firstChild) {
+    function computerWin(gameloop) {
+      if (gameloop.player.board.allSunk()) {
+        console.log("Computer wins!");
+        return true;
+      }
+      return false;
+    }
+
+    if (
+      gameloop.player.turn &&
+      !e.target.firstChild &&
+      e.target.classList.contains("zone")
+    ) {
+      gameloop.player.changeTurn();
       fireCannon(cannon);
       this.playerFires(e, gameloop)
-        .then(fireFeedback(this.playerShot))
-        .then(playerWin(gameloop));
+        .then(fireFeedback)
+        .then(() => {
+          playerWin(gameloop);
+        })
+        .then(() => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(fireCannon(cannon));
+            }, 1200);
+          });
+        })
+        .then(() => {
+          this.computerFires(gameloop, playerBoard)
+            .then(fireFeedback)
+            .then(() => {
+              if (!computerWin(gameloop)) {
+                window.setTimeout(() => {
+                  gameloop.player.changeTurn();
+                }, 700);
+              }
+            });
+        });
 
       // .then(() => {
-      //   this.computerFires(gameloop, playerBoard);
+      //   return new Promise((resolve) => {
+      //     setTimeout(() => {
+      //       resolve(gameloop.player.changeTurn());
+      //     });
+      //   });
       // });
     }
 

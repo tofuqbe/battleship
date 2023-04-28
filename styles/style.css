@@ -19,16 +19,20 @@
 
 .hide {
   display: none;
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
 .absolute {
-  position: absolute;
+  position: absolute !important;
 }
 
 body {
   background-color: #17191a;
   font-family: "Aldrich-Regular";
+}
+
+.audio {
+  display: none;
 }
 
 .headerbar {
@@ -57,6 +61,22 @@ body {
   transform: translateX(160%) scaleX(-1);
 }
 
+#audio-controller {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 152px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#audio-icon:hover {
+  cursor: pointer;
+}
+
 .max-width {
   max-width: 1400px;
   height: calc(100% - 120px - 64px);
@@ -67,21 +87,10 @@ body {
   align-items: center;
 }
 
-.name-prompt-container {
-  width: 100%;
-  background-color: rgb(255, 255, 255);
-  background-color: #17191a;
-}
-
 .name-prompt-container form {
   display: flex;
-  height: 100%;
   justify-content: center;
   align-items: center;
-}
-form {
-  width: fit-content;
-  margin: 0 auto;
 }
 
 form label {
@@ -149,12 +158,12 @@ form button:hover {
 }
 
 #placement-container {
-  margin-top: 35%;
+  margin-top: 184px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto;
   border-radius: 6px;
-  row-gap: 16px;
+  row-gap: 64px;
   justify-items: center;
   align-items: center;
   transition: all 0.75s ease-in-out;
@@ -223,10 +232,7 @@ form button:hover {
   width: 200px;
 }
 
-#cruiser {
-  width: 150px;
-}
-
+#cruiser,
 #submarine {
   width: 150px;
 }
@@ -306,15 +312,15 @@ form button:hover {
 
 #board-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: calc(50% * 0.8) calc(50% * 1.1);
   grid-template-rows: 1fr 1fr;
   height: 650px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
-  column-gap: unset;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 60px;
   border-radius: 6px;
   transition: all 0.75s ease-in-out;
+  column-gap: 96px;
 }
 
 .boardWrapper .board {
@@ -396,5 +402,150 @@ form button:hover {
   100% {
     opacity: 0%;
     visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .name-prompt-container {
+    align-self: center;
+  }
+  #audio-controller {
+    margin-top: 102px;
+  }
+  #board-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: unset;
+    height: 650px;
+    margin: 0 auto;
+    column-gap: unset;
+  }
+
+  .boardWrapper.player {
+    grid-row: 2;
+  }
+
+  .max-width {
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #fleet-selection {
+    display: grid;
+    height: 300px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    align-items: flex-start;
+  }
+
+  #fleet-selection p {
+    grid-row: 1;
+    grid-column: 2;
+    position: relative;
+    padding: unset;
+  }
+
+  .headerbar img {
+    display: none;
+  }
+
+  #audio-controller {
+    height: 40px;
+  }
+  #placement-container {
+    row-gap: 96px;
+  }
+  .placedShip {
+    height: 30px;
+  }
+
+  #carrier {
+    width: 150px;
+    grid-row: 1;
+  }
+
+  #battleship {
+    width: 120px;
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  #cruiser,
+  #submarine {
+    width: 90px;
+    grid-row: 2;
+  }
+
+  #destroyer {
+    grid-row: 2;
+    width: 60px;
+  }
+
+  #carrier.rotate {
+    width: 30px !important;
+    height: 150px !important;
+  }
+
+  #battleship.rotate {
+    width: 30px !important;
+    height: 120px !important;
+  }
+
+  #cruiser.rotate,
+  #submarine.rotate {
+    width: 30px !important;
+    height: 90px !important;
+  }
+
+  #destroyer.rotate {
+    width: 30px !important;
+    height: 60px !important;
+  }
+
+  #board-container {
+    height: 450px;
+    width: 450px;
+    row-gap: 32px;
+    position: absolute;
+  }
+
+  .boardWrapper {
+    height: 350px;
+    width: 350px;
+  }
+
+  .boardWrapper .board {
+    height: 300px;
+    width: 300px;
+    margin: 16px 0px;
+  }
+
+  .boardWrapper .board {
+    padding: unset;
+  }
+}
+
+@media screen and (max-height: 1000px) {
+  .headerbar {
+    padding: 8px 0px 8px 0px;
+  }
+  #audio-controller {
+    height: 40px;
+    margin-top: 82px;
+  }
+
+  :root {
+    --fs-xl: 2.25rem;
+    --fs-600: 1.2rem;
+    --fs-500: 0.9rem;
+    --fs-400: 0.6rem;
+    --green: rgb(43, 216, 86);
+  }
+
+  .boardWrapper h2 {
+    padding: 4px 0px;
   }
 }
