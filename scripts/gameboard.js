@@ -103,6 +103,19 @@ class Gameboard {
     }
   }
 
+  computerPriorityHits(shipType, x, y) {
+    let char = "a";
+    let shipCoordinates = [];
+    for (let i = 0; i < 10; i++) {
+      char = String.fromCharCode(97 + i);
+      for (let j = 0; j < 10; j++) {
+        if (this.grid[char][j] === shipType && char + j !== x + y)
+          shipCoordinates.push([char, j]);
+      }
+    }
+    return shipCoordinates;
+  }
+
   receiveAttack(coordinates) {
     let x = coordinates[0];
     let y = coordinates[1];
@@ -110,22 +123,40 @@ class Gameboard {
     switch (this.grid[x][y]) {
       case null:
         this.grid[x][y] = "miss";
-        return false;
+        return [false];
       case "Carrier":
         this.fleet.carrier.isHit(), this.fleet.carrier.isSunk();
-        return true;
+        this.grid[x][y] = "hit";
+        return [true, this.computerPriorityHits(this.fleet.carrier.name, x, y)];
+
       case "Battleship":
         this.fleet.battleship.isHit(), this.fleet.battleship.isSunk();
-        return true;
+        this.grid[x][y] = "hit";
+        return [
+          true,
+          this.computerPriorityHits(this.fleet.battleship.name, x, y),
+        ];
+
       case "Cruiser":
         this.fleet.cruiser.isHit(), this.fleet.cruiser.isSunk();
-        return true;
+        this.grid[x][y] = "hit";
+        return [true, this.computerPriorityHits(this.fleet.cruiser.name, x, y)];
+
       case "Submarine":
         this.fleet.submarine.isHit(), this.fleet.submarine.isSunk();
-        return true;
+        this.grid[x][y] = "hit";
+        return [
+          true,
+          this.computerPriorityHits(this.fleet.submarine.name, x, y),
+        ];
+
       case "Destroyer":
         this.fleet.destroyer.isHit(), this.fleet.destroyer.isSunk();
-        return true;
+        this.grid[x][y] = "hit";
+        return [
+          true,
+          this.computerPriorityHits(this.fleet.destroyer.name, x, y),
+        ];
     }
   }
 

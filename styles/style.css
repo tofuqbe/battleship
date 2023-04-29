@@ -124,9 +124,6 @@ body {
   align-items: center;
 }
 
-.name-prompt-container {
-}
-
 .name-prompt-container form {
   display: flex;
   justify-content: center;

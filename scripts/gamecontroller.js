@@ -3,9 +3,12 @@ const result = document.querySelector("#result");
 class Game_Controller {
   constructor() {
     this.audio = document.querySelectorAll(".audio");
-    this.cannons = [this.audio[0], this.audio[1]];
-    this.splash = this.audio[2];
-    this.explosion = this.audio[3];
+    this.playerCannons = [this.audio[0], this.audio[1]];
+    this.computerCannons = [this.audio[2], this.audio[3]];
+    this.splashPlayer = this.audio[4];
+    this.explosionPlayer = this.audio[5];
+    this.splashComputer = this.audio[6];
+    this.explosionComputer = this.audio[7];
     this.playerShot = false;
     this.computerShot = false;
     this.state = "open";
@@ -58,12 +61,11 @@ class Game_Controller {
   }
 
   playerTurn(e, gameloop) {
-    if (
-      gameloop.player.attackEnemy(
-        Game_Controller.getCoordFromBoard(e.target.dataset.num),
-        gameloop.computer.board
-      )
-    ) {
+    let playerShot = gameloop.player.attackEnemy(
+      Game_Controller.getCoordFromBoard(e.target.dataset.num),
+      gameloop.computer.board
+    );
+    if (playerShot[0]) {
       let hit = document.createElement("div");
       hit.classList.add("hit");
       e.target.appendChild(hit);
@@ -77,8 +79,13 @@ class Game_Controller {
   }
 
   enemyTurn(gameloop, playerBoard) {
+    // Communicate back to enemy class the array of coordinates to fire at once hit a ship and remove them from the total list left.
     let coordinates = gameloop.computer.randomiseCoordinates();
-    if (gameloop.computer.attackEnemy(coordinates, gameloop.player.board)) {
+    let enemyShot = gameloop.computer.attackEnemy(
+      coordinates,
+      gameloop.player.board
+    );
+    if (enemyShot[0]) {
       let hit = document.createElement("div");
       hit.classList.add("hitPlayer");
       playerBoard.children[
@@ -107,22 +114,33 @@ class Game_Controller {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.enemyTurn(gameloop, playerBoard));
-      }, 1000);
+      }, 1200);
     });
   }
 
   turnHandler(e, gameloop, playerBoard, fadeIn) {
-    let cannon = this.cannons;
-    let splash = this.splash;
-    let explosion = this.explosion;
+    let cannonPlayer = this.playerCannons;
+    let cannonComputer = this.computerCannons;
+    let splashPlayer = this.splashPlayer;
+    let explosionPlayer = this.explosionPlayer;
+    let splashComputer = this.splashComputer;
+    let explosionComputer = this.explosionComputer;
     function fireCannon(type) {
       let randomNumber = Math.floor(Math.random() * 2);
       type[randomNumber].play();
     }
-    function fireFeedback(hit) {
+    function fireFeedbackPlayer(hit) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve(hit ? explosion.play() : splash.play());
+          resolve(hit ? explosionPlayer.play() : splashPlayer.play());
+        }, 100);
+      });
+    }
+
+    function fireFeedbackComputer(hit) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(hit ? explosionComputer.play() : splashComputer.play());
         }, 100);
       });
     }
@@ -149,27 +167,27 @@ class Game_Controller {
       e.target.classList.contains("zone")
     ) {
       gameloop.player.changeTurn();
-      fireCannon(cannon);
+      fireCannon(cannonPlayer);
       this.playerFires(e, gameloop)
-        .then(fireFeedback)
+        .then(fireFeedbackPlayer)
         .then(() => {
           playerWin(gameloop);
         })
         .then(() => {
           return new Promise((resolve) => {
             setTimeout(() => {
-              resolve(fireCannon(cannon));
+              resolve(fireCannon(cannonComputer));
             }, 1000);
           });
         })
         .then(() => {
           this.computerFires(gameloop, playerBoard)
-            .then(fireFeedback)
+            .then(fireFeedbackComputer)
             .then(() => {
               if (!computerWin(gameloop)) {
                 window.setTimeout(() => {
                   gameloop.player.changeTurn();
-                }, 700);
+                }, 100);
               }
             });
         });
