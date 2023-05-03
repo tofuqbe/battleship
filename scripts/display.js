@@ -2,6 +2,8 @@ import Game_Controller from "./gamecontroller.js";
 
 class Display {
   constructor() {
+    this.allPlaced = 0;
+    this.reset = true;
     this.dragged = null;
     this.rotated = {
       carrier: false,
@@ -22,7 +24,6 @@ class Display {
       x: null,
       y: null,
     };
-    this.shipsToPlace = 5;
     this.gameController = new Game_Controller();
   }
 
@@ -81,6 +82,45 @@ class Display {
     });
   }
 
+  static removeShipstoPlace(target) {
+    while (target.firstChild) {
+      target.lastChild.remove();
+    }
+  }
+
+  static resetShipsToPlace(target) {
+    Display.removeShipstoPlace(target);
+
+    for (let i = 0; i < 5; i++) {
+      let div = document.createElement("div");
+      div.classList.add("drag");
+      div.setAttribute("draggable", "true");
+      switch (i) {
+        case 0:
+          div.setAttribute("id", "carrier");
+          div.innerText = "CV";
+          break;
+        case 1:
+          div.setAttribute("id", "battleship");
+          div.innerText = "BB";
+          break;
+        case 2:
+          div.setAttribute("id", "cruiser");
+          div.innerText = "CA";
+          break;
+        case 3:
+          div.setAttribute("id", "submarine");
+          div.innerText = "SS";
+          break;
+        case 4:
+          div.setAttribute("id", "destroyer");
+          div.innerText = "DD";
+          break;
+      }
+      target.append(div);
+    }
+  }
+
   // Drag and drop API usage below
 
   // stores offsets and sets element in the datatransfer object.
@@ -97,6 +137,8 @@ class Display {
   // sets the variable data with element from datatransfer object.
 
   dragdrop_handler(e, gameloop, target, copyLocation) {
+    if (!this.reset) return 0;
+    this.allPlaced++;
     const data = e.dataTransfer.getData("text");
     // Gets index of target from dataset.
     let zoneNumber = e.target.dataset.num - 1;
@@ -132,25 +174,6 @@ class Display {
         document.getElementById(data)
       );
       this.postPlacementTweaks(e, zoneNumber);
-      this.shipsToPlace -= 1;
-      if (this.shipsToPlace === 0) {
-        Display.fadeOut(target);
-        Display.copyGrid(copyLocation, target.children[1]);
-        Display.generateGrid(
-          document.querySelector("#board-container"),
-          "computer",
-          "Enemy Fleet"
-        );
-        Display.fadeIn(copyLocation);
-        copyLocation.children[1].addEventListener("click", (e) => {
-          this.gameController.turnHandler(
-            e,
-            gameloop,
-            copyLocation.children[0].children[3],
-            Display.fadeIn
-          );
-        });
-      }
     }
   }
 
@@ -196,6 +219,14 @@ class Display {
     grid.classList.remove("board");
     grid.classList.add("player");
     target.appendChild(grid);
+  }
+
+  static resetGrid(target) {
+    for (let i = 0; i < 100; i++) {
+      while (target.children[i].firstChild) {
+        target.children[i].lastChild.remove();
+      }
+    }
   }
 
   static generateGrid(target, owner, header) {

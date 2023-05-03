@@ -80,12 +80,22 @@
       <div id="board-container" class="fade hide absolute"></div>
       <div id="placement-container" class="fade hide absolute">
         <div id="fleet-selection">
-          <p>Press [R] to rotate axis before placing</p>
-          <div class="drag" id="carrier" draggable="true">CV</div>
-          <div class="drag" id="battleship" draggable="true">BB</div>
-          <div class="drag" id="cruiser" draggable="true">CA</div>
-          <div class="drag" id="submarine" draggable="true">SS</div>
-          <div class="drag" id="destroyer" draggable="true">DD</div>
+          <p>
+            Press [R] while hovering over each ship to rotate it. Drag the ship
+            with left mouse button to place on the board.
+          </p>
+          <div class="placementShips">
+            <div class="drag" id="carrier" draggable="true">CV</div>
+            <div class="drag" id="battleship" draggable="true">BB</div>
+            <div class="drag" id="cruiser" draggable="true">CA</div>
+            <div class="drag" id="submarine" draggable="true">SS</div>
+            <div class="drag" id="destroyer" draggable="true">DD</div>
+          </div>
+          <div class="buttons">
+            <button id="btn-random">Randomise placement</button>
+            <button id="btn-reset">Reset placement</button>
+            <button id="btn-start">START</button>
+          </div>
         </div>
       </div>
     </div>

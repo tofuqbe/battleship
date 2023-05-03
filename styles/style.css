@@ -3,7 +3,7 @@
   --fs-600: 1.6rem;
   --fs-500: 1.2rem;
   --fs-400: 0.8rem;
-  --green: rgb(43, 216, 86);
+  --green: rgb(75, 223, 112);
 }
 
 @font-face {
@@ -204,6 +204,7 @@ form button:hover {
   justify-items: center;
   align-items: center;
   transition: all 0.75s ease-in-out;
+  user-select: none;
 }
 
 .placedShip {
@@ -226,9 +227,9 @@ form button:hover {
   position: relative;
   height: 260px;
   width: 100%;
-  display: flex;
-  grid-template-rows: 32px 1fr;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: auto;
+  justify-items: center;
   position: relative;
 }
 
@@ -246,6 +247,10 @@ form button:hover {
   padding: 0px;
 }
 
+.placementShips {
+  display: flex;
+}
+
 #fleet-selection p {
   user-select: none;
   padding: 8px 0px;
@@ -255,10 +260,30 @@ form button:hover {
   transform: translateY(calc(-100% - 16px));
 }
 
+#fleet-selection button {
+  height: 50px;
+  padding: 16px;
+  margin: 0px 8px;
+  font-size: 16px;
+  font-family: "Aldrich-Regular";
+  border: none;
+  transition: color 300ms ease-in-out;
+}
+
+#fleet-selection button:hover {
+  background-color: rgb(89, 160, 226);
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+#btn-start:hover {
+  background-color: var(--green) !important;
+}
+
 #fleet-selection .drag:hover {
   cursor: pointer;
-  background-color: rgba(15, 92, 165, 0.7);
-  transition: transform 200ms linear;
+  background-color: rgb(89, 160, 226);
+  transition: all 200ms ease-in-out;
 }
 
 #carrier {

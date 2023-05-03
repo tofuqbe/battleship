@@ -33,6 +33,14 @@ class Gameboard {
     };
   }
 
+  resetGrid() {
+    for (let y in this.grid) {
+      for (let i = 0; i < 10; i++) {
+        this.grid[y][i] = null;
+      }
+    }
+  }
+
   isOnGrid(coordinates) {
     let unicode = coordinates[0].toLowerCase().charCodeAt(0);
     let n = coordinates[1];
@@ -85,6 +93,13 @@ class Gameboard {
   }
 
   randomiseBoard() {
+    let direction = {
+      carrier: false,
+      battleship: false,
+      cruiser: false,
+      submarine: false,
+      destroyer: false,
+    };
     let array = [
       this.fleet.carrier.name.toLowerCase(),
       this.fleet.battleship.name.toLowerCase(),
@@ -100,7 +115,9 @@ class Gameboard {
         randomBoolean = Math.floor(Math.random() * 2);
       } while (!this.validateShip(array[i], coordinates, randomBoolean));
       this.placeShip(array[i], coordinates, randomBoolean);
+      direction[array[i]] = randomBoolean;
     }
+    return direction;
   }
 
   computerPriorityHits(shipType, x, y) {

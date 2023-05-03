@@ -87,7 +87,6 @@ class Computer extends Player {
         }
 
         let randomNumber = Math.floor(Math.random() * array.length);
-        console.log(this.hitConfirmation[1]);
         this.previousCoordinate = this.hitConfirmation[1][randomNumber];
         this.updateCoordinates(this.previousCoordinate);
         return this.previousCoordinate;

@@ -1,0 +1,59 @@
+[33mcommit 2adeffd4e0df59e751c172d584646756bfaed42e[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Sat Apr 29 23:08:53 2023 +0100
+
+    reworked computer ai. Changed to independant audio sources for both user and computer.
+
+[33mcommit 46b35b522933360cafa127494b878ff6a026151e[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Fri Apr 28 21:13:30 2023 +0100
+
+    brush up on small screens. Victory screen and reset.
+
+[33mcommit 47ab1802a707634ca5c12e5efd335e3960f71679[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Fri Apr 28 17:44:47 2023 +0100
+
+    gameloop finished with sounds and volume controller. css styling for smaller screens.
+
+[33mcommit 88e21265ea6833cd4a9d1d247ea14d8bf386b705[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Thu Apr 27 23:37:51 2023 +0100
+
+    some polish and slightly improved computer plays.
+
+[33mcommit 4ddb179932948652b3565c4a40e50759378013cf[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Wed Apr 26 17:36:55 2023 +0100
+
+    added gamecontroler for combat phase.
+
+[33mcommit 56a81181bccb157321b28fa1abfe8d43635b6ce2[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Tue Apr 25 23:24:16 2023 +0100
+
+    battle phase started.
+
+[33mcommit fa51ca9e9695ee67b1ad28401732954f7b5a8d0b[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Tue Apr 25 15:25:45 2023 +0100
+
+    finished interfacing the display controller for placement of ships with the relevant game logic.
+
+[33mcommit 24dbbff74aedee70c1d0e5c19034d0fbfbfa9f3b[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Mon Apr 24 20:54:40 2023 +0100
+
+    placement with drag and drop api implemented.
+
+[33mcommit 1fd1de6cf5e84c0a42fbbd75440874c14c6c472a[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Thu Apr 20 23:37:34 2023 +0100
+
+    gameloop unfinished, need DOM manipulation, folders restructured.
+
+[33mcommit 5fca57d53c3692cbcd008131c1455717642f6d6b[m
+Author: tofuqbe <harristurner97@gmail.com>
+Date:   Wed Apr 19 20:02:14 2023 +0100
+
+    initial commit.
