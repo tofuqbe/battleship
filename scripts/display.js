@@ -138,7 +138,9 @@ class Display {
 
   dragdrop_handler(e, gameloop, target, copyLocation) {
     if (!this.reset) return 0;
+
     this.allPlaced++;
+    console.log(this.allPlaced);
     const data = e.dataTransfer.getData("text");
     // Gets index of target from dataset.
     let zoneNumber = e.target.dataset.num - 1;
@@ -146,13 +148,13 @@ class Display {
     let rotated = this.rotated[data];
 
     // offsets index to the left or topmost square of a ship's length, reguardless of the cursor location when it is dragged.
-    while (this.offset.x > 50) {
+    while (this.offset.x > 40) {
       zoneNumber -= 1;
-      this.offset.x -= 50;
+      this.offset.x -= 40;
     }
-    while (this.offset.y > 50) {
+    while (this.offset.y > 40) {
       zoneNumber -= 10;
-      this.offset.y -= 50;
+      this.offset.y -= 40;
     }
 
     // prevents drop by disreguarding inputs that leave a square of the ship outside of the grid.

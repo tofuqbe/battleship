@@ -59,7 +59,8 @@ placementBoard.childNodes.forEach((zone) => {
 });
 
 let startGame = () => {
-  if (display.allPlaced !== 5) return 0;
+  console.log(display.allPlaced);
+  if (display.allPlaced < 5) return 0;
   placementContainer.remove();
   Display.copyGrid(boardContainer, placementContainer.children[1]);
   Display.generateGrid(
@@ -79,13 +80,13 @@ let startGame = () => {
 };
 
 let resetBoard = () => {
-  display.allPlaced = 0;
   gameloop.player.board.resetGrid();
   Display.resetShipsToPlace(placementShips);
   Display.resetGrid(placementContainer.children[1].children[3]);
+  display.allPlaced = 0;
   display.reset = true;
   for (let ship in display.rotated) {
-    ship = false;
+    display.rotated[ship] = false;
   }
 };
 

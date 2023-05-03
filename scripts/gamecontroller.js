@@ -16,7 +16,7 @@ class Game_Controller {
       const animation = bodymovin.loadAnimation({
         // animationData: { /* ... */ },
         container: document.querySelector("#audio-controller"), // required
-        path: ".//assets/volume.json", // required
+        path: ".//assets/volumeBlack.json", // required
         renderer: "svg", // required
         loop: false, // optional
         autoplay: false, // optional

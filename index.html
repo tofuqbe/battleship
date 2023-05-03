@@ -80,28 +80,48 @@
       <div id="board-container" class="fade hide absolute"></div>
       <div id="placement-container" class="fade hide absolute">
         <div id="fleet-selection">
-          <p>
-            Press [R] while hovering over each ship to rotate it. Drag the ship
-            with left mouse button to place on the board.
-          </p>
-          <div class="placementShips">
-            <div class="drag" id="carrier" draggable="true">CV</div>
-            <div class="drag" id="battleship" draggable="true">BB</div>
-            <div class="drag" id="cruiser" draggable="true">CA</div>
-            <div class="drag" id="submarine" draggable="true">SS</div>
-            <div class="drag" id="destroyer" draggable="true">DD</div>
-          </div>
           <div class="buttons">
-            <button id="btn-random">Randomise placement</button>
-            <button id="btn-reset">Reset placement</button>
+            <button id="btn-random">Randomise Placement</button>
+            <button id="btn-reset">Reset Placement</button>
             <button id="btn-start">START</button>
+          </div>
+          <div class="instructions">
+            <p>
+              Press [R] while hovering over each ship to rotate it. Drag the
+              ship with left mouse button to place on the board.
+            </p>
+          </div>
+          <div class="placementShips-wrapper">
+            <div class="placementShips">
+              <div>
+                <div class="drag" id="carrier" draggable="true">CV</div>
+              </div>
+              <div>
+                <div class="drag" id="battleship" draggable="true">BB</div>
+              </div>
+              <div>
+                <div class="drag" id="cruiser" draggable="true">CA</div>
+              </div>
+              <div>
+                <div class="drag" id="submarine" draggable="true">SS</div>
+              </div>
+              <div>
+                <div class="drag" id="destroyer" draggable="true">DD</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <footer>
+      <p>Made by tofuqbed</p>
+      <img src="./assets/github.svg" alt="github icon" />
+    </footer>
     <script
       type="text/javascript"
       src="./scripts/bodymovin-library.js"
+      async
+      defer
     ></script>
     <script type="module" src="./scripts/game.js" async defer></script>
   </body>
